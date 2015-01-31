@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+     <string-array name="navMenu">
+        <item>Attendance</item>
+        <item>Marks</item>
+        <item>Books</item>
+        <item>Profile</item>
+        <item>Events</item>
+        <item>Academic Calendar</item>
+        <item>Notifications</item>
+        <item>Settings</item>
+        <item>Help</item>
+        
+    </string-array>
+</resources>
