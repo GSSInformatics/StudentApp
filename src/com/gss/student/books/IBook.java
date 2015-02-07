@@ -3,7 +3,6 @@
  */
 package com.gss.student.books;
 
-import java.util.Date;
 
 /**
  * 
@@ -35,5 +34,5 @@ public interface IBook {
 	 * Returns the book return date from the library.
 	 * @return return date of the book
 	 */
-	Date getSubmissionDate();
+	String getSubmissionDate();
 }

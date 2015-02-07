@@ -49,6 +49,6 @@ public class CustomList extends ArrayAdapter<IBook> {
 				.findViewById(R.id.submissionDate);
 		returnDate.setText(books.get(position).getSubmissionDate().toString());
 
-		return super.getView(position, convertView, parent);
+		return rowView;
 	}
 }
