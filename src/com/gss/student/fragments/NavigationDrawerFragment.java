@@ -1,6 +1,7 @@
 package com.gss.student.fragments;
 
 import com.gss.sliderexample.R;
+import com.gss.student.login.LoginActivity;
 
 import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
@@ -9,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -271,9 +273,13 @@ public class NavigationDrawerFragment extends Fragment {
 			return true;
 		}
 
-		if (item.getItemId() == R.id.action_example) {
-			Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT)
+		if (item.getItemId() == R.id.action_logout) {
+			Toast.makeText(getActivity(), "Logged out!", Toast.LENGTH_SHORT)
 					.show();
+			Intent myIntent = new Intent(getActivity(), LoginActivity.class);
+		    myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// clear back stack
+		    startActivity(myIntent);
+		    getActivity().finish();
 			return true;
 		}
 

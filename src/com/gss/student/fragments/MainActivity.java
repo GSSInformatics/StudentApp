@@ -86,16 +86,10 @@ public class MainActivity extends ActionBarActivity implements
 		case 6: {
 			FragmentManager fragmentManager = getSupportFragmentManager();
 			fragmentManager.beginTransaction()
-					.replace(R.id.container, new Notifications()).commit();
-		}
-			break;
-		case 7: {
-			FragmentManager fragmentManager = getSupportFragmentManager();
-			fragmentManager.beginTransaction()
 					.replace(R.id.container, new Settings()).commit();
 		}
 			break;
-		case 8: {
+		case 7: {
 			FragmentManager fragmentManager = getSupportFragmentManager();
 			fragmentManager.beginTransaction()
 					.replace(R.id.container, new About()).commit();
