@@ -1,6 +1,9 @@
 package com.gss.student.fragments;
 
+import java.util.List;
+
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -8,12 +11,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.gss.sliderexample.R;
+import com.gss.student.attendance.AttendanceInfo;
 import com.gss.student.attendance.IAttendance;
-import com.gss.student.attendance.demoData.AttendanceDemoData;
+import com.gss.student.login.LoadMarksDetails;
+import com.gss.student.login.LoadStudentDetails;
+import com.gss.student.marks.ISemester;
 
 public class MainActivity extends ActionBarActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
-	
 
 	/**
 	 * Fragment managing the behaviors, interactions and presentation of the
@@ -22,41 +27,52 @@ public class MainActivity extends ActionBarActivity implements
 	private NavigationDrawerFragment mNavigationDrawerFragment;
 
 	private IAttendance attendance;
-	
+
+	private String regId;
+
 	public MainActivity() {
-		attendance = new AttendanceDemoData();
 	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		StrictMode.ThreadPolicy policy = new
+				StrictMode.ThreadPolicy.Builder()
+				.permitAll().build();
+				StrictMode.setThreadPolicy(policy);
+		
+		attendance = (AttendanceInfo) getIntent().getSerializableExtra(
+				"attendanceInfo");
+		regId = getIntent().getStringExtra("regId");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
 
 		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
-		
+
 	}
 
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
-		// update the main content by replacing fragments
 
 		switch (position) {
 		case 0: {
+			LoadStudentDetails attendanceDetails = new LoadStudentDetails();
+			AttendanceInfo attendanceInfo = attendanceDetails.getAttendanceSync(regId);
 			FragmentManager fragmentManager = getSupportFragmentManager();
 			fragmentManager.beginTransaction()
-					.replace(R.id.container, new Attendance(attendance))
+					.replace(R.id.container, new Attendance(attendanceInfo))
 					.commit();
 		}
 			break;
 		case 1: {
+			LoadMarksDetails mrksDetails = new LoadMarksDetails(regId);
+			List<ISemester> marksSyn = mrksDetails.getMarksSyn();
 			FragmentManager fragmentManager = getSupportFragmentManager();
 			fragmentManager.beginTransaction()
-					.replace(R.id.container, new Marks()).commit();
+					.replace(R.id.container, new Marks(marksSyn)).commit();
 		}
 			break;
 		case 2: {
@@ -74,13 +90,13 @@ public class MainActivity extends ActionBarActivity implements
 		case 4: {
 			FragmentManager fragmentManager = getSupportFragmentManager();
 			fragmentManager.beginTransaction()
-					.replace(R.id.container, new Events()).commit();
+					.replace(R.id.container, new EventFragment()).commit();
 		}
 			break;
 		case 5: {
 			FragmentManager fragmentManager = getSupportFragmentManager();
 			fragmentManager.beginTransaction()
-					.replace(R.id.container, new AcademicCaledar()).commit();
+					.replace(R.id.container, new AcademiCalendar()).commit();
 		}
 			break;
 		case 6: {

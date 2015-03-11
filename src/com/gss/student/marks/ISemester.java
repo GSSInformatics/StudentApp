@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public interface ISemester {
  
-	int getSemester();
+	String getSemester();
 	
 	int getPercentage();
 	

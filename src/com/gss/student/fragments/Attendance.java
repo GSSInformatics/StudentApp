@@ -26,6 +26,7 @@ import com.github.mikephil.charting.data.ScatterData;
 import com.github.mikephil.charting.data.ScatterDataSet;
 import com.github.mikephil.charting.interfaces.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.LimitLine;
+import com.github.mikephil.charting.utils.ValueFormatter;
 import com.github.mikephil.charting.utils.XLabels;
 import com.github.mikephil.charting.utils.XLabels.XLabelPosition;
 import com.github.mikephil.charting.utils.YLabels;
@@ -88,7 +89,7 @@ public class Attendance extends Fragment {
 			@Override
 			public void onValueSelected(Entry e, int dataSetIndex) {
 				IAbsent monthAbsents = attendance.getMonthlyAbsentees().get(
-						dataSetIndex);
+						e.getXIndex());
 				displayMonthlyChart(monthAbsents);
 			}
 
@@ -120,6 +121,13 @@ public class Attendance extends Fragment {
 		scatterChart.animateY(3000);
 		scatterChart.fitScreen();
 		scatterChart.setStartAtZero(false);
+		scatterChart.setValueFormatter(new ValueFormatter() {
+
+			@Override
+			public String getFormattedValue(float value) {
+				return Integer.toString((int) value);
+			}
+		});
 	}
 
 	/**
@@ -132,15 +140,14 @@ public class Attendance extends Fragment {
 	 */
 	public ScatterData getScatterDataBasedOnMonth(
 			SparseArray<List<Integer>> dayAttendance) {
-		String[] periodNames = new String[] { "1", "2", "3", "4", "5", "6",
-				"7", "8" };
+		String[] periodNames = new String[] { "1", "2", "3", "4", "5", "6", "7" };
 		ScatterData data = new ScatterData(periodNames);
 		for (int i = 0; i < dayAttendance.size(); i++) {
 			int day = dayAttendance.keyAt(i);
 			ArrayList<Entry> yVals = new ArrayList<>();
 			List<Integer> periodAbsentes = dayAttendance.get(day);
 			for (int periodIdx : periodAbsentes) {
-				yVals.add(new Entry(day, periodIdx));
+				yVals.add(new Entry(day, periodIdx-1));
 			}
 			ScatterDataSet dataSet = new ScatterDataSet(yVals, "");
 			dataSet.setScatterShape(ScatterShape.CIRCLE);

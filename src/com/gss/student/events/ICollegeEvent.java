@@ -3,18 +3,15 @@
  */
 package com.gss.student.events;
 
+import java.util.List;
+
 /**
- * @author AjaykumarVasireddy
- * @version 1.0
+ * @author VAMSI KRISHNA
  *
  */
 public interface ICollegeEvent {
 	
 	String getDate();
 	
-	String getName();
-	
-	String getOrganiserName();
-	
-	String getOrganiserNumber();
+	List<IEventTime> getEvents();
 }

@@ -42,8 +42,8 @@ public class MarksDemo implements IResult {
 		}
 
 		@Override
-		public int getSemester() {
-			return semester;
+		public String getSemester() {
+			return ""+semester;
 		}
 
 		@Override

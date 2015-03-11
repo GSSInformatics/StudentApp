@@ -50,5 +50,5 @@ public interface IAbsent {
 	 * @return map containing day of the month as key and list of absented
 	 *         periods as value.
 	 */
-	SparseArray<List<Integer>> getDailyAbsentees();
+	SerializableSparseArray<List<Integer>> getDailyAbsentees();
 }

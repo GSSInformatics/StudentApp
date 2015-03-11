@@ -10,6 +10,7 @@ import android.util.SparseArray;
 
 import com.gss.student.attendance.IAbsent;
 import com.gss.student.attendance.IAttendance;
+import com.gss.student.attendance.SerializableSparseArray;
 
 /**
  * @author admin
@@ -51,7 +52,7 @@ public class AttendanceDemoData implements IAttendance {
 		}
 
 		@Override
-		public SparseArray<List<Integer>> getDailyAbsentees() {
+		public SerializableSparseArray<List<Integer>> getDailyAbsentees() {
 			return createDummyData();
 		}
 
@@ -94,8 +95,8 @@ public class AttendanceDemoData implements IAttendance {
 
 	}
 
-	private SparseArray<List<Integer>> createDummyData() {
-		SparseArray<List<Integer>> dailyAtt = new SparseArray<List<Integer>>();
+	private SerializableSparseArray<List<Integer>> createDummyData() {
+		SerializableSparseArray<List<Integer>> dailyAtt = new SerializableSparseArray<List<Integer>>();
 		List<Integer> periods = new ArrayList<Integer>();
 		for (int j = 1; j < 32; j++) {
 			for (int i = 0; i < 8; i++) {

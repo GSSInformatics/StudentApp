@@ -24,9 +24,7 @@ import com.github.mikephil.charting.utils.LimitLine;
 import com.github.mikephil.charting.utils.XLabels;
 import com.github.mikephil.charting.utils.XLabels.XLabelPosition;
 import com.gss.sliderexample.R;
-import com.gss.student.marks.IResult;
 import com.gss.student.marks.ISemester;
-import com.gss.student.marks.demoData.MarksDemo;
 
 public class Marks extends Fragment {
 
@@ -34,10 +32,10 @@ public class Marks extends Fragment {
 
 	private View rootView;
 
-	private IResult result;
+	private List<ISemester> result;
 
-	public Marks() {
-		this.result = new MarksDemo();
+	public Marks(List<ISemester> semResults) {
+		this.result = semResults;
 	}
 
 	@Override
@@ -52,15 +50,15 @@ public class Marks extends Fragment {
 	private void displaySemesterChart() {
 		ArrayList<String> xVals = new ArrayList<String>();
 		ArrayList<BarEntry> yVals = new ArrayList<BarEntry>();
-		for (ISemester sem : result.getSemesterMarks()) {
+		int i = 0;
+		for (ISemester sem : result) {
 			xVals.add("" + sem.getSemester());
-			BarEntry mat = new BarEntry(sem.getPercentage(),
-					sem.getSemester() - 1);
+			BarEntry mat = new BarEntry(sem.getPercentage(), i++);
 			yVals.add(mat);
 		}
 		BarDataSet dataSet = new BarDataSet(yVals, "");
 		BarData data = new BarData(xVals, dataSet);
-		 chart.setDrawXLabels(true);
+		chart.setDrawXLabels(true);
 		XLabels xl = chart.getXLabels();
 		xl.setPosition(XLabelPosition.BOTTOM_INSIDE); // set the position
 		xl.setSpaceBetweenLabels(3);
@@ -79,7 +77,7 @@ public class Marks extends Fragment {
 
 			@Override
 			public void onValueSelected(Entry e, int semIndex) {
-				displaySubjectChart(result.getSemesterMarks().get(semIndex));
+				displaySubjectChart(result.get(semIndex));
 			}
 
 			@Override
